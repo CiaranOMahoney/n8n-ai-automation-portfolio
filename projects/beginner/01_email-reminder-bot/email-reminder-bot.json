@@ -1,0 +1,113 @@
+{
+  "name": "Email Reminder Bot",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        20,
+        0
+      ],
+      "id": "d15e4c71-6e29-429d-a339-1375e93c0f32",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d5b030ae-4dd9-4232-b5b9-2d13de74459b",
+              "name": "subject",
+              "value": "Your Daily Reminder",
+              "type": "string"
+            },
+            {
+              "id": "413e0fce-29cc-41c0-93dc-40d8c2b302df",
+              "name": "body",
+              "value": "Don't forget to review your task list and prioritize your day!",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        0
+      ],
+      "id": "ba1763c4-4709-4ff2-91be-91e28bc8933a",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "fromEmail": "ciaranomahoney@gmail.com",
+        "toEmail": "ciaranomahoney@gmail.com",
+        "subject": "={{$json[\"subject\"]}}",
+        "html": "={{$json[\"body\"]}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "f8d1ed26-78fd-4f60-afa7-eb7d8fc157dd",
+      "name": "Send Email",
+      "webhookId": "cf79f227-6bca-4dbc-baf1-f88b2a1ae976",
+      "credentials": {
+        "smtp": {
+          "id": "YUxGWV7fIKC9KXXX",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e1657a71-bc60-4edc-ad36-3a9a17715f01",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "23ae8b5e6e47c9cc1aceb0f84fb70f640602735eebe93acf019baf92cfbdc992"
+  },
+  "id": "OV6mS9Tf3YCGxp1q",
+  "tags": []
+}
