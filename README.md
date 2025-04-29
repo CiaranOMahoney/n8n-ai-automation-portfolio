@@ -1,5 +1,3 @@
-# n8n-ai-automation-portfolio
-
 # 🧠 N8N AI Automation Portfolio
 Hi, I’m Ciaran — an aspiring AI automation specialist focused on building real-world automations using [n8n](https://n8n.io/), AI agents, and open-source tools.
 
