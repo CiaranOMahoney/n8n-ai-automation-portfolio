@@ -25,9 +25,12 @@ It sends a scheduled daily reminder email to a target address automatically at a
 - Managing case sensitivity in field names.
 
 ## Screenshots
-_Insert your screenshots here, for example:_
-- Full workflow diagram (n8n canvas view).
-- Example of the email received (subject and body visible).
+
+### 🧭 Workflow Diagram
+![Workflow Diagram](./screenshots/workflow-diagram.png)
+
+### 📩 Output Email
+![Email Screenshot](./screenshots/email-output.png)
 
 ## Files
 - `email-reminder-bot.json` — exported n8n workflow file.
