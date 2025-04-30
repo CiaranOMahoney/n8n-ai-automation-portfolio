@@ -1,0 +1,207 @@
+{
+  "name": "Webhook Form Collector",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "form-collector",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        -40
+      ],
+      "id": "968b261a-8c2d-4145-9bcd-6faae77bbb6d",
+      "name": "Webhook",
+      "webhookId": "cc28ec6a-50e6-47e3-950d-5ad4275ede66"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3333f464-58d2-48f4-8df0-700bc25dbde5",
+              "name": "name",
+              "value": "={{$json[\"body\"][\"name\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "0232c34d-850a-41bd-8542-003a19684903",
+              "name": "email",
+              "value": "={{$json[\"body\"][\"email\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "160a214f-08dd-466c-9462-87d877118fd5",
+              "name": "=message",
+              "value": "={{$json[\"body\"][\"message\"]}}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": "={{ false }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        -40
+      ],
+      "id": "efb91a91-4186-4e42-8a82-e7fd68bfe554",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "fromEmail": "ciaranomahoney@gmail.com",
+        "toEmail": "ciaranomahoney@gmail.com",
+        "subject": "=New Form Submission from {{$json[\"name\"]}}",
+        "html": "=<p><strong>Name:</strong> {{$json[\"name\"]}}</p>\n<p><strong>Email:</strong> {{$json[\"email\"]}}</p>\n<p><strong>Message:</strong> {{$json[\"message\"]}}</p>\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        440,
+        -140
+      ],
+      "id": "43f30ad9-6520-4f8a-b5ca-c76087e3c5ab",
+      "name": "Send Email",
+      "webhookId": "37088ccf-747e-4f85-8706-5c5a7c51427c",
+      "credentials": {
+        "smtp": {
+          "id": "YUxGWV7fIKC9KXXX",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1uyfycU0easJUdOXic6WKhJgk-4d_yEdfXr-pWO958Pw",
+          "mode": "list",
+          "cachedResultName": "Form Submissions",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uyfycU0easJUdOXic6WKhJgk-4d_yEdfXr-pWO958Pw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 647988559,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uyfycU0easJUdOXic6WKhJgk-4d_yEdfXr-pWO958Pw/edit#gid=647988559"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email": "={{ $json[\"email\"] }}",
+            "Message": "={{ $json[\"message\"] }}",
+            "Name": "={{ $json[\"name\"] }}"
+          },
+          "matchingColumns": [
+            "Name"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        440,
+        60
+      ],
+      "id": "7cf5b4dd-847f-4f2c-a4c4-40254d50b26f",
+      "name": "Google Sheets",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4pMja3aylzUafvIM",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "718db1e0-d8b7-484c-b9e7-0fbae7b823ea",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "23ae8b5e6e47c9cc1aceb0f84fb70f640602735eebe93acf019baf92cfbdc992"
+  },
+  "id": "cVjRwNVjAl0VABKf",
+  "tags": []
+}
