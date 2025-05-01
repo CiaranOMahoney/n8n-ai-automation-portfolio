@@ -19,4 +19,5 @@ Tired of manually organizing your GitHub portfolio? This automation turns your p
 - Future-ready for Notion/Sheets sync
 
 ## Screenshots
-_Screenshots will appear here after upload._
+
+![Portfolio Auto Manager](./screenshots/portfolio%20auto%20manager.png)
